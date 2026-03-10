@@ -16,3 +16,11 @@ This project is a simple Python tool that analyzes log files to detect suspiciou
 ## How to Run
 
 Clone the repository:
+
+## Project Structure
+
+security-log-analyzer
+│
+├── log_analyzer.py
+├── sample_log.txt
+└── README.md
