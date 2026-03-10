@@ -5,16 +5,21 @@ failed_logins = defaultdict(int)
 
 log_file = input("Enter log file name: ")
 
-with open(log_file, "r") as file:
-    for line in file:
-        if "Failed password" in line:
-            ip_match = re.search(r'\d+\.\d+\.\d+\.\d+', line)
-            if ip_match:
-                ip = ip_match.group()
-                failed_logins[ip] += 1
+try:
+    with open(log_file, "r") as file:
+        for line in file:
+            if "Failed password" in line:
+                ip_match = re.search(r'\d+\.\d+\.\d+\.\d+', line)
 
-print("\nSuspicious Activity Report\n")
+                if ip_match:
+                    ip = ip_match.group()
+                    failed_logins[ip] += 1
 
-for ip, count in failed_logins.items():
-    if count >= 3:
-        print(f"IP: {ip} | Failed attempts: {count}")
+    print("\n===== Suspicious Activity Report =====\n")
+
+    for ip, count in failed_logins.items():
+        if count >= 3:
+            print(f"⚠️  Suspicious IP: {ip} | Failed attempts: {count}")
+
+except FileNotFoundError:
+    print("Log file not found.")
